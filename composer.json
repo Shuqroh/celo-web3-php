@@ -1,0 +1,21 @@
+{
+    "name": "shuqroh/celo-web3-php",
+    "autoload": {
+        "psr-4": {
+            "Shuqroh\\CeloWeb3Php\\": "src/"
+        }
+    },
+    "minimum-stability": "dev",
+    "authors": [
+        {
+            "name": "Shuqroh",
+            "email": "shukurahganiyuy@yahoo.com"
+        }
+    ],
+    "require": {
+        "web3p/web3.php": "dev-master",
+        "web3p/ethereum-tx": "dev-master",
+        "multiplechain/utils": "dev-master",
+        "multiplechain/evm-based-chains": "dev-master"
+    }
+}
