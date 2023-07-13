@@ -35,12 +35,12 @@ final class Contract
     /**
      * @param string $address
      * @param array $abi
-     * @param Provider|null $provider
+     * @param Provider $provider
      */
     public function __construct(string $address, array $abi, Provider $provider)
     {
-        if (AddressValidator::validate($address) === false) {
-            throw new \Exception('Invalid contract address!', 23000);
+        if (!AddressValidator::validate($address)) {
+            throw new \InvalidArgumentException('Invalid contract address!');
         }
 
         $this->address = $address;
@@ -50,39 +50,40 @@ final class Contract
 
     /**
      * @param string $method
-     * @param array $params
+     * @param mixed ...$params
      * @return string|null
-     * @throws Exception
+     * @throws \Exception
      */
     public function getEstimateGas(string $method, ...$params): ?string
     {
         $gas = null;
-        call_user_func_array([$this->contract, 'estimateGas'], [$method, ...$params, function ($err, $res) use (&$gas) {
+        $callback = function ($err, $res) use (&$gas) {
             if ($err) {
                 throw new \Exception($err->getMessage(), $err->getCode());
             } else {
                 $gas = $res;
             }
-        }]);
+        };
+
+        $this->contract->estimateGas($method, ...$params, $callback);
 
         if ($gas instanceof BigNumber) {
             return Utils::hex($gas->toString());
-        } else {
-            return Utils::hex($this->defaultGas);
         }
 
-        return $gas;
+        return Utils::hex($this->defaultGas);
     }
 
     /**
      * @param string $method
-     * @param array $params
+     * @param mixed ...$params
      * @return string|null
-     * @throws Exception
+     * @throws \Exception
      */
     public function getData(string $method, ...$params): ?string
     {
-        return '0x' . $this->contract->getData($method, ...$params);
+        $data = $this->contract->getData($method, ...$params);
+        return '0x' . $data;
     }
 
     /**
@@ -96,19 +97,21 @@ final class Contract
 
     /**
      * @param string $method
-     * @param array $params
+     * @param mixed ...$params
      * @return mixed
      */
     public function __call(string $method, array $params)
     {
         $result = null;
-        call_user_func_array([$this->contract, 'call'], [$method, ...$params, function ($err, $res) use (&$result) {
+        $callback = function ($err, $res) use (&$result) {
             if ($err) {
                 throw new \Exception($err->getMessage(), $err->getCode());
             } else {
                 $result = $res;
             }
-        }]);
+        };
+
+        $this->contract->call($method, ...$params, $callback);
 
         return $result;
     }
