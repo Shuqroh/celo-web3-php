@@ -1,15 +1,30 @@
-## Introduction
+# Utilization of the WEB3.php Framework using Celo Blockchain for seamless communication:
 
-Throughout this lesson, we will explore the utilization of the web3.php framework for seamless communication with the Celo blockchain. By the tutorial's conclusion, you will possess the capability to connect to the Celo network, access blockchain data, and effortlessly send transactions using web3.php.
+## Table of Contents:
 
-## Prerequisites
+- [Utilization of the WEB3.php Framework using Celo Blockchain for seamless communication](#utilization-of-the-web3.php-framework-using-celo-blockchain-for-seamless-communication)
+- [Introduction](#introduction)
+- [Pre-requisites](#pre-requisites)
+- [Getting Started](#getting-started)
+  - [How it works?](#how-it-works-?)
+  - [Configure composer.json](#configure-composer.json)
+  - [Code Implementation](#code-implementation)
+- [Conclusion](conclusion)
+- [About the Author](#about-the-author)
+- [References](#references)
+  
+## Introduction:
 
-* Basic knowledge of PHP programming
-* Familiarity with blockchain concepts
+Through this tutorial, we will explore the utilization of the web3.php framework for seamless communication with the Celo blockchain. By the tutorial's end, you will possess the capability to connect to the Celo network, access blockchain data and effortlessly send transactions using web3.php.
 
-## Getting Started
+## Pre-requisites:
 
-Assuming familiarity with **Composer**, I will omit the setup instructions for installing and configuring **Composer** on your development computer. Additionally, I assume you have already set up VS Code on your PC. For macOS users, PHP and Composer can be easily installed via [Homebrew](https://brew.sh/).
+* Basic knowledge of [PHP](https://www.w3schools.com/php/) programming.
+* Familiarity with [Blockchain](https://aws.amazon.com/what-is/blockchain/?aws-products-all.sort-by=item.additionalFields.productNameLowercase&aws-products-all.sort-order=asc) concepts.
+
+## Getting Started:
+
+Assuming familiarity with **Composer**, I will omit the setup instructions for installing and configuring **Composer** on your development computer. Additionally, I assume you have already set up [VS Code](https://code.visualstudio.com/download) on your PC. For macOS users, PHP and Composer can be easily installed via [Homebrew](https://brew.sh/).
 
 If you are new to PHP development and have never used **Composer** before, you can learn more about it at [getcomposer.org](https://getcomposer.org/).
 
@@ -17,14 +32,13 @@ To begin, you can clone the [celo-web3-php](https://github.com/Shuqroh/celo-web3
 
 **Composer** is a powerful tool for managing dependencies in PHP projects. It enables you to specify the libraries your project relies on and automatically handles their installation and updates for you.
 
-### How it works
+### How it works?
 
-web3-php is a PHP interface for interacting with the Ethereum blockchain and ecosystem. Native ABI parsing and smart contract interactions.
+Web3-php is a PHP interface for interacting with the Ethereum blockchain and ecosystem. Native ABI parsing and smart contract interactions.
 
-### Configure composer.json
+### Configure composer.json:
 
 Create a new folder, named "celo-web3-php," to manage the project. Initiate Composer within the project folder to set up Composer and the necessary files.
-
 
 ```bash
 composer init
@@ -50,19 +64,19 @@ After initializing Composer, your composer.json file should resemble the followi
 }
 ```
 
-Update the composer file by changing/add the minimum stability to dev
+Update the composer file by changing/add the minimum stability to dev:
 
 ```bash
 "minimum-stability": "dev"
 ```
 
-Install web3-php through the terminal
+Install web3-php through the terminal:
 
 ```bash
 composer require web3p/web3.php dev-master
 ```
 
-or add it manually by adding ```"web3p/web3.php": "dev-master"``` to require in composer.json
+or add it manually by adding ```"web3p/web3.php": "dev-master"``` to require in composer.json:
 
 ```json
 {
@@ -86,7 +100,7 @@ or add it manually by adding ```"web3p/web3.php": "dev-master"``` to require in 
 ```
 Then run ```composer install``` in your terminal, to confirm if the installation is complete open the vendor folder and look for ```web3p/web3.php```If found then the installation is complete.
 
-### Code implementation
+### Code implementation:
 
 Open ```src``` folder and create file named ```CeloWeb3Php.php```. Import web3 with the keyword ```use Web3\Web3;```
 
@@ -455,8 +469,6 @@ final class Utils extends AbstractUtils
 * The final validation checks if the `$tokenAddress` is not `null` and if it is provided, it also validates the address. If the address is invalid, an `\Exception` is thrown with a specific error code.
 
 That's the explanation of the code provided. The `Utils` class extends `AbstractUtils` and provides a static `validate` method for validating various parameters.
-
-
 
 * Manage Token ```Token.php```
 
@@ -1163,7 +1175,6 @@ Additionally, the class has a static property `$codes` that defines exception co
 
 This class is part of a larger package/library for interacting with the Celo blockchain using PHP.
 
-
 * Manage contract ```Contract.php```
 
 ```php
@@ -1646,7 +1657,6 @@ This method, `getBalance()`, retrieves the balance of the current coin for a giv
 
 That's an overview of the provided code. It represents a PHP class that interacts with a coin (token) on the Celo blockchain. It provides methods to generate transfer data, initiate coin transfers, retrieve balance, and retrieve coin-related information such as decimals and symbol.
 
-
 We may now attempt to communicate with Celo Blockchain after classifying all fundamental functions into distinct categories.
 
 Let's update ```CeloWeb3Php.php```
@@ -1655,7 +1665,6 @@ Let's update ```CeloWeb3Php.php```
 <?php
 
 namespace Shuqroh\CeloWeb3Php;
-
 
 $celo_mainnet = [
     "id" => 42220,
@@ -1687,14 +1696,12 @@ $cusd_token_address = [
     "testnet" => "0x874069Fa1Eb16D44d622F2e0Ca25eeA172369bC1"
 ];
 
-
 /**
  * Create web3 provider instance
  * @var Provider
  */
 
 $provider =  new Provider($celo_testnet, true);
-
 
 /**
  * get provder network
@@ -1703,13 +1710,10 @@ $provider =  new Provider($celo_testnet, true);
 
 print_r($provider->getNetwork());
 
-
-
 /**
  * transfer celo
  * @var string
  */
-
 
 $from = "0x8d8e9c5b1e162a7d0eef414a8e6e0f1a4d9d4d9b";
 $to = "0x8d8e9c5b1e162a7d0eef414a8e6e0f1a4d9d4d9b";
@@ -1730,8 +1734,6 @@ $amount = 1;
 $token_address = "0x";
 
 print_r($provider->transfer($from, $to, $amount, $cusd_token_address['testnet']));
-
-
 
 /**
  * connect to smart contract
@@ -1754,15 +1756,21 @@ $contract = new Contract($contract_address, $contract_abi, $provider);
 print_r($contract->call("function_name", ["param1", "param2"]));
 ```
 
-The code above explains how you can create a web3 provider instance from the OOP classes we created before and then use it to transfer tokens, connect to smart contracts, etc.
+The code above explains how you can create a web3 provider instance from the OOP classes we created before and then use it to transfer tokens, connect to smart contracts etc.
 
-## About the Author
+## Conclusion:
 
-Shukurah Ganiyu is a UIUX designer and a content writer passionate about blockchain, DeFi, NFTs, and cryptocurrencies for the emerging Web3 sector. 
+Therefore, the utilization of the WEB3.php framework in conjunction with the Celo blockchain provides a powerful solution for seamless communication. WEB3.php is a popular framework that allows developers to interact with blockchain networks, and by integrating it with Celo, a blockchain platform focused on creating financial inclusion, communication can be enhanced in various ways.
+
+By leveraging WEB3.php, developers can easily build applications that interact with the Celo blockchain, enabling seamless communication through smart contracts, decentralized applications (dApps), and other blockchain functionalities. This framework provides a wide range of features and tools, such as sending and receiving transactions, querying blockchain data and interacting with smart contracts, all of which contribute to a robust communication infrastructure.
+
+## About the Author:
+
+Shukurah Ganiyu is a UI/UX designer and a content writer passionate about blockchain, DeFi, NFTs and cryptocurrencies for the emerging Web3 sector. 
 
 - [Github](https://github.com/Shuqroh)
 
-## References
+## References:
 
 [Source code](https://github.com/Shuqroh/celo-web3-php)
 
